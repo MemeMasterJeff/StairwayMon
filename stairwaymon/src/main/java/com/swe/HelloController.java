@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.fazecast.jSerialComm.*;
 
+
+//shid I did this in the wrong file
 @RestController
 public class HelloController {
     @Autowired
