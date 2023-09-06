@@ -1,6 +1,9 @@
 package com.swe;
 
 import lombok.Data;
+
+import java.io.InputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -13,26 +16,26 @@ import com.fazecast.jSerialComm.*;
 public class HelloController {
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
+    private static InputStream in;
+    public static void main(String[] args) {
+        SerialPort comPort = SerialPort.getCommPorts()[0];
+        comPort.openPort();
+        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);;
+        in = comPort.getInputStream();
+                
 
+    }
+    //idk 
     @RequestMapping("/")
-    String hello() {
-        return "Hello World!";
+    char poll() {
+        char signal = 1;//picked random number
+        try{
+            signal = (char)in.read();
+            System.out.println(signal);
+        } catch (Exception e) {
+            e.printStackTrace();;
+        }
+        return signal;
     }
 
-    @Data
-    static class Result {
-        private final int left;
-        private final int right;
-        private final long answer;
-    }
-
-    // SQL sample
-    @RequestMapping("calc")
-    Result calc(@RequestParam int left, @RequestParam int right) {
-        MapSqlParameterSource source = new MapSqlParameterSource()
-                .addValue("left", left)
-                .addValue("right", right);
-        return jdbcTemplate.queryForObject("SELECT :left + :right AS answer", source,
-                (rs, rowNum) -> new Result(left, right, rs.getLong("answer")));
-    }
 }
