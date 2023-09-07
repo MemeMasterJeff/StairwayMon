@@ -17,7 +17,7 @@ public final class App {
         }
 
         SerialPort serialPort = serialPorts[0];//idk copilot did this lol
-        serialPort.setBaudRate(115200);
+        serialPort.setBaudRate(9600);
         serialPort.setNumDataBits(8);
         serialPort.setNumStopBits(1);
         serialPort.setParity(SerialPort.NO_PARITY);
