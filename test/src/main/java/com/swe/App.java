@@ -14,20 +14,22 @@ public class App {
             return;
         }
         SerialPort serialPort = serialPorts[0];
+        
         serialPort.setBaudRate(9600);
         serialPort.setNumDataBits(8);
         serialPort.setNumStopBits(1);
         serialPort.setParity(SerialPort.NO_PARITY);
+        serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
         serialPort.openPort();
         //reading part
         try {
            while (true) {
-                byte[] readbuffer = new byte[8];
+                byte[] readbuffer = new byte[5];
                 int bytesRead = serialPort.readBytes(readbuffer, readbuffer.length);
                 System.out.println(bytesRead);
                 if (bytesRead > 0) {
                     System.out.println("Read " + bytesRead + " bytes.");
-                    System.out.println("Data: " + new String(readbuffer, 0, bytesRead));
+                    System.out.println("Data: " + new String(readbuffer, "US-ASCII"));
                 }
                 Thread.sleep(100);
            } 
