@@ -15,6 +15,9 @@ public class App {
             System.err.println("No serial ports found.");
             return;
         }
+        /*for(SerialPort s:serialPorts){
+            System.out.println(s);
+        }*/
         SerialPort serialPort = serialPorts[0];
         
         serialPort.setBaudRate(9600);
@@ -28,7 +31,7 @@ public class App {
            while (true) {
                 byte[] readbuffer = new byte[5];
                 int bytesRead = serialPort.readBytes(readbuffer, readbuffer.length);
-                System.out.println(bytesRead);
+                //System.out.println(bytesRead);
                 if (bytesRead > 0) {
                     System.out.println("Read " + bytesRead + " bytes.");
                     System.out.println("Data: " + new String(readbuffer, StandardCharsets.US_ASCII));
