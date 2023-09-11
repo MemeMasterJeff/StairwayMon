@@ -1,4 +1,6 @@
 package com.swe;
+import java.nio.charset.StandardCharsets;
+
 import com.fazecast.jSerialComm.SerialPort;
 
 /**
@@ -29,7 +31,7 @@ public class App {
                 System.out.println(bytesRead);
                 if (bytesRead > 0) {
                     System.out.println("Read " + bytesRead + " bytes.");
-                    System.out.println("Data: " + new String(readbuffer, "US-ASCII"));
+                    System.out.println("Data: " + new String(readbuffer, StandardCharsets.US_ASCII));
                 }
                 Thread.sleep(100);
            } 
